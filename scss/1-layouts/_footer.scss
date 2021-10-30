@@ -1,0 +1,17 @@
+@use '../0-base/variables';
+@use '../2-modules/responsivity';
+
+footer{
+    margin: 80px 0 40px 0;
+    color: variables.$grey;
+    text-align: center;
+    @include responsivity.mobile{
+        width: 100%;
+        padding: 20px;
+        font-size: .9em;
+    }
+    span{
+        font-weight: 700;
+        color: variables.$purple;
+    }
+}

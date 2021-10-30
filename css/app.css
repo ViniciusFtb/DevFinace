@@ -1,0 +1,247 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
+}
+
+ul {
+  list-style: none;
+}
+
+header {
+  height: 250px;
+  background-color: #000000;
+  padding-top: 20px;
+  text-align: center;
+}
+@media (max-width: 750px) {
+  header {
+    height: 180px;
+  }
+}
+header h1 {
+  font-size: 2.5em;
+  color: #ffffff;
+  font-weight: 600;
+}
+@media (max-width: 750px) {
+  header h1 {
+    font-size: 1.5em;
+  }
+}
+header h1 span {
+  color: #800080;
+  font-weight: 800;
+}
+header h1 span:nth-of-type(2) {
+  font-size: 0.75em;
+}
+
+body {
+  background-color: #e0e0e0;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.balance-container {
+  width: 740px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  top: 140px;
+}
+@media (max-width: 750px) {
+  .balance-container {
+    width: 100%;
+    flex-direction: column;
+    gap: 20px;
+    top: 70px;
+    padding: 20px;
+  }
+}
+.balance-container .balance {
+  width: 230px;
+  height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px 30px;
+}
+@media (max-width: 750px) {
+  .balance-container .balance {
+    width: 100%;
+    height: 110px;
+  }
+}
+.balance-container .balance-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.balance-container .balance-title img {
+  width: 30px;
+  height: 30px;
+}
+.balance-container .balance-title img#up {
+  filter: invert(39%) sepia(100%) saturate(1839%) hue-rotate(91deg) brightness(106%) contrast(106%);
+}
+.balance-container .balance-title img#down {
+  filter: invert(31%) sepia(46%) saturate(6679%) hue-rotate(345deg) brightness(116%) contrast(103%);
+}
+.balance-container .balance .amount {
+  font-size: 1.5em;
+  font-weight: 800;
+}
+.balance-container .balance.purple {
+  color: white;
+  background-color: #800080;
+}
+.balance-container .balance.purple img {
+  filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(121deg) brightness(103%) contrast(102%);
+}
+
+.transaction {
+  width: 740px;
+  margin-top: 80px;
+}
+@media (max-width: 750px) {
+  .transaction {
+    width: 100%;
+    margin-top: 300px;
+    padding: 20px;
+  }
+}
+.transaction button {
+  color: #800080;
+  background: none;
+  border: none;
+  font-weight: 700;
+  font-size: 1em;
+  cursor: pointer;
+  margin-bottom: 30px;
+}
+.transaction li {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 0.3fr;
+  align-items: center;
+  background-color: #f1f1f1;
+  margin-bottom: 10px;
+  padding: 20px 30px;
+  border-radius: 5px;
+  color: #5c5c5c;
+}
+@media (max-width: 750px) {
+  .transaction li {
+    font-size: 0.9em;
+    grid-template-columns: 1fr 1fr 1fr 0.1fr;
+    padding: 10px;
+  }
+}
+.transaction li#head {
+  background-color: #ffffff;
+}
+.transaction li .money {
+  font-weight: 700;
+}
+.transaction li .money.positive {
+  color: #00be00;
+}
+.transaction li .money.negative {
+  color: #ff0000;
+}
+.transaction li .date {
+  color: #aaaaaa;
+}
+.transaction img {
+  width: 30px;
+  height: 30px;
+}
+@media (max-width: 750px) {
+  .transaction img {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+#modal-container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.644);
+}
+@media (max-width: 750px) {
+  #modal-container {
+    padding: 0 20px;
+  }
+}
+#modal-container .modal {
+  width: 500px;
+  padding: 30px;
+  background-color: #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 2px;
+}
+#modal-container .modal input {
+  width: 100%;
+  border: none;
+  padding: 10px;
+  border-radius: 2px;
+}
+#modal-container .modal p {
+  color: #aaaaaa;
+  font-size: 0.8em;
+}
+#modal-container .modal .buttons {
+  display: flex;
+  gap: 10px;
+}
+#modal-container .modal .buttons button {
+  width: 50%;
+  height: 45px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#modal-container .modal .buttons #cancel {
+  background-color: transparent;
+  color: #ff0000;
+  border: 2px solid #ff0000;
+}
+#modal-container .modal .buttons #save {
+  background-color: #00be00;
+  color: #ffffff;
+  border: none;
+}
+
+footer {
+  margin: 80px 0 40px 0;
+  color: #5c5c5c;
+  text-align: center;
+}
+@media (max-width: 750px) {
+  footer {
+    width: 100%;
+    padding: 20px;
+    font-size: 0.9em;
+  }
+}
+footer span {
+  font-weight: 700;
+  color: #800080;
+}
+
+/*# sourceMappingURL=app.css.map */

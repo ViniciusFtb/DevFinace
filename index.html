@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevFinance</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+    <header>
+        <h1>dev<span>.</span>finance<span>$</span></h1>
+    </header>
+    <main>
+        <div class="balance-container">
+            <div class="balance">
+                <div class="balance-title">
+                    <p>Entradas</p>
+                    <img src="./images/arrow-up.svg" alt="Arrow up" id="up">
+                </div>
+                <div class="amount">
+                    R$ <span id="deposity">5.000,00</span>
+                </div>
+            </div>
+            <div class="balance">
+                <div class="balance-title">
+                    <p>Saídas</p>
+                    <img src="./images/arrow-down.svg" alt="Arrow down" id="down">
+                </div>
+                <div class="amount">
+                    R$ <span id="withdraw">0,00</span>
+                </div>
+            </div>
+            <div class="balance purple">
+                <div class="balance-title">
+                    <p>Total</p>
+                    <img src="./images/coin-mount.svg" alt="money sign">
+                </div>
+                <div class="amount">
+                    R$ <span id="total">5.000,00</span>
+                </div>
+            </div>
+        </div>
+        <div class="transaction">
+            <button id="openModal">+ Nova Transação</button>
+            <ul id="transactionsWrapper">
+                <li id="head">
+                    <p>Descrição</p>
+                    <p>Valor</p>
+                    <p>Data</p>
+                </li>
+                <li>
+                    <p>Exemplo</p>
+                    <p class="money positive">
+                        R$ 5000,00
+                    </p>
+                    <p class="date">05/11/2021</p>
+                    <img src="./images/minus-sign.svg" alt="Minus sign" class="remove-transaction">
+                </li>
+            </ul>
+        </div>
+        <div id="modal-container">
+            <div class="modal">
+                <h2>Nova Transação</h2>
+                <input type="text" name="descricao" id="description" placeholder="Descrição">
+                <div>
+                    <input type="number" name="purchase" id="purchase" placeholder="0,00" required>
+                    <p>Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais</p>
+                </div>
+                <input type="date" name="date" id="date">
+                <div class="buttons">
+                    <button id="cancel">Cancelar</button>
+                    <button id="save">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <strong>2021 - dev.finance$</strong>
+        <br>
+        Desenvolvido por <strong>Vinícius Fontebasso</strong>
+        <br>
+        Inspirado no <strong>DevFinance</strong> da <span>Rocketseat</span> 
+    </footer>
+    <script src="modal.js"></script>
+    <script src="transaction.js"></script>
+</body>
+</html>

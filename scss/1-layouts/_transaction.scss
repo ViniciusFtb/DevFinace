@@ -1,0 +1,62 @@
+@use '../0-base/variables';
+@use '../2-modules/responsivity';
+
+.transaction{
+    width: 740px;
+    margin-top: 80px;
+
+    @include responsivity.mobile{
+        width: 100%;
+        margin-top: 300px;
+        padding: 20px;
+    }
+    button{
+        color: variables.$purple;
+        background: none;
+        border: none;
+        font-weight: 700;
+        font-size: 1em;
+        cursor: pointer;
+        margin-bottom: 30px;
+    }
+    li{
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 0.3fr;
+        align-items: center;
+        background-color: variables.$very-light-grey;
+        margin-bottom: 10px;
+        padding: 20px 30px;
+        border-radius: 5px;
+        color: variables.$grey;
+
+        @include responsivity.mobile{
+            font-size: .9em;
+            grid-template-columns: 1fr 1fr 1fr 0.1fr;
+            padding: 10px; 
+        }
+        &#head{
+            background-color: variables.$white;
+        }
+        .money{
+            font-weight: 700;
+            &.positive{
+                color: variables.$green;
+            }
+            &.negative{
+                color: variables.$red;
+            }
+        }
+        .date{
+            color: variables.$date-color;
+        }
+    }
+    img{
+        width: 30px;
+        height: 30px;
+
+        @include responsivity.mobile{
+            width: 18px;
+            height: 18px;
+        }
+    }
+}
