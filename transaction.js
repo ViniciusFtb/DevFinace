@@ -2,25 +2,50 @@ const save = document.getElementById('save');
 const ul = document.getElementById('transactionsWrapper');
 
 //FINANCES
-function generateFinances(money){
+function generateFinances(money = 0){
     let totalMoney = localStorage.getItem('totalMoney');
-    let moneyHtml = document.getElementById('total');
-    if (totalMoney != 'null'){
-        totalMoney = JSON.parse(totalMoney);
+    totalMoney = JSON.parse(totalMoney);
+
+    if (totalMoney !== null){
         totalMoney = parseFloat(totalMoney);
         totalMoney += parseFloat(money);
         totalMoney = JSON.stringify(totalMoney);
-        moneyHtml.innerHTML = correctNumber(totalMoney);
         localStorage.setItem('totalMoney', totalMoney);
+        updateTotalHtml();
     }else{
         totalMoney = parseFloat(money);
         totalMoney = JSON.stringify(totalMoney);
         localStorage.setItem('totalMoney', totalMoney);
-        totalMoney = correctNumber(totalMoney);
-        moneyHtml.innerHTML = totalMoney;
+        updateTotalHtml();
     } 
 }
-window.addEventListener('load', generateFinances);
+
+function removeFinances(money){
+    let totalMoney = localStorage.getItem('totalMoney');
+    totalMoney = JSON.parse(totalMoney);
+    totalMoney -= parseFloat(money);
+    totalMoney = JSON.stringify(totalMoney);
+    localStorage.setItem('totalMoney', totalMoney);
+    updateTotalHtml();
+}
+
+function updateTotalHtml(){
+    let moneyHtml = document.getElementById('total');
+    let totalMoney = localStorage.getItem('totalMoney');
+
+    if (totalMoney != null){
+        console.log(totalMoney);
+        if (totalMoney < 0){
+            moneyHtml.innerHTML = "-" + correctNumber(totalMoney);
+        }else{
+            moneyHtml.innerHTML = correctNumber(totalMoney);
+        }
+    }else{
+        moneyHtml.innerHTML = "0,00";
+    }
+}
+window.addEventListener('load', updateTotalHtml());
+
 
 //CREATING TRANSACTION
 function clearInputField(){
@@ -65,23 +90,29 @@ function getMoneyColor(num){
     }
 }
 
-function createTransaction(id){ 
+function createTransaction(id, remove = 0, updateTotal = 0){ 
     let storaged = localStorage.getItem(id);
     storaged = JSON.parse(storaged)
 
-    if(storaged != null){
+    if(storaged !== null){
+
+        if (updateTotal == 1){
+            updateTotalHtml();
+        }else{
+            console.log('generate');
+            generateFinances(storaged[1]);
+        }
+
         ul.innerHTML += `
-        <li id="${id}" >
-        <p>${storaged[0]}</p>
-        <p class="money ${getMoneyColor(storaged[1])}">
-        ${getSign(storaged[1])}R$ ${correctNumber(storaged[1])}
-        </p>
-        <p class="date">${storaged[2]}</p>
-        <img src="./images/minus-sign.svg" alt="Minus sign" class="remove-transaction" onclick="removeTransaction(event)" id="${id}">
-        </li>
+            <li id="${id}" >
+            <p>${storaged[0]}</p>
+            <p class="money ${getMoneyColor(storaged[1])}">
+            ${getSign(storaged[1])}R$ ${correctNumber(storaged[1])}
+            </p>
+            <p class="date">${storaged[2]}</p>
+            <img src="./images/minus-sign.svg" alt="Minus sign" class="remove-transaction" onclick="removeTransaction(event)" id="${id}">
+            </li>
         `;
-        console.log(storaged[1]);
-        generateFinances(storaged[1]);
     }
     
     clearInputField();
@@ -91,10 +122,12 @@ function createTransaction(id){
 function removeTransaction(event){
     event.target.parentElement.style.display = 'none';
     let id = event.target.id
-    localStorage.removeItem(id);
 
-    let value = event.target.parentElement;
-    console.log(value);
+    let storaged = localStorage.getItem(id);
+    storaged = JSON.parse(storaged)
+    removeFinances(storaged[1]);
+
+    localStorage.removeItem(id);
 }
 
 
@@ -156,7 +189,7 @@ function storeTransaction(){
         trArray = JSON.stringify(trArray);
         index = 0
         localStorage.setItem(index, trArray);
-        createTransaction(index)
+        createTransaction(index, 0, 0)
         index = JSON.stringify(index);
         localStorage.setItem('index', index)
     }else{
@@ -164,7 +197,7 @@ function storeTransaction(){
         trArray = JSON.stringify(trArray);
         index++
         localStorage.setItem(index, trArray);
-        createTransaction(index)
+        createTransaction(index, 0, 0)
         index = JSON.stringify(index);
         localStorage.setItem('index', index)
     }
@@ -193,7 +226,7 @@ function checkStorageData(){
 
     if(storageTotalLength > 0){
         for(let i = 0; i <= storageTotalLength; i++){
-            createTransaction(i);
+            createTransaction(i, 0, 1);
         }
     }
 }
