@@ -1,6 +1,88 @@
 const save = document.getElementById('save');
 const ul = document.getElementById('transactionsWrapper');
 
+
+//DEPOSITIES AND WITHDRAWS
+function deposityOrWithdraw(money = 0){
+    if (money > 0){
+        let deposity = localStorage.getItem('deposity');
+        deposity = JSON.parse(deposity);
+        if (deposity !== null){
+            deposity = parseFloat(deposity);
+            deposity += parseFloat(money);
+            deposity = JSON.stringify(deposity);
+            localStorage.setItem('deposity', deposity);
+            updateDeposityHtml();
+        }else{
+            deposity = parseFloat(money);
+            deposity = JSON.stringify(deposity);
+            localStorage.setItem('deposity', deposity);
+            updateDeposityHtml();
+        }
+    }else{
+        let withdraw = localStorage.getItem('withdraw');
+        withdraw = JSON.parse(withdraw);
+
+        if (withdraw !== null){
+            withdraw = parseFloat(withdraw);
+            withdraw += parseFloat(money);
+            withdraw = JSON.stringify(withdraw);
+            localStorage.setItem('withdraw', withdraw);
+            updateWithdrawHtml();
+        }else{
+            withdraw = parseFloat(money);
+            withdraw = JSON.stringify(withdraw);
+            localStorage.setItem('withdraw', withdraw);
+            updateWithdrawHtml();
+        }
+    }
+}
+
+function removeDeposityOrWithdraw(money){
+    if(money > 0){
+        let deposity = localStorage.getItem('deposity');
+        deposity = JSON.parse(deposity);
+        deposity -= parseFloat(money);
+        deposity = JSON.stringify(deposity);
+        localStorage.setItem('deposity', deposity);
+        updateDeposityHtml();
+    }else{
+        let withdraw = localStorage.getItem('withdraw');
+        withdraw = JSON.parse(withdraw);
+        withdraw -= parseFloat(money);
+        withdraw = JSON.stringify(withdraw);
+        localStorage.setItem('withdraw', withdraw);
+        updateWithdrawHtml();
+    }
+}
+
+function updateDeposityHtml(){
+    let deposityHtml = document.getElementById('deposity');
+    let deposity = localStorage.getItem('deposity');
+
+    if (deposity != null){
+        deposityHtml.innerHTML = correctNumber(deposity);
+
+    }else{
+        deposityHtml.innerHTML = "0,00";
+    }
+}
+window.addEventListener('load', updateDeposityHtml());
+
+function updateWithdrawHtml(){
+    let withdrawHtml = document.getElementById('withdraw');
+    let withdraw = localStorage.getItem('withdraw');
+
+    if (withdraw != null){
+        withdrawHtml.innerHTML = correctNumber(withdraw);
+
+    }else{
+        withdrawHtml.innerHTML = "0,00";
+    }
+}
+window.addEventListener('load', updateWithdrawHtml());
+
+
 //FINANCES
 function generateFinances(money = 0){
     let totalMoney = localStorage.getItem('totalMoney');
@@ -34,7 +116,6 @@ function updateTotalHtml(){
     let totalMoney = localStorage.getItem('totalMoney');
 
     if (totalMoney != null){
-        console.log(totalMoney);
         if (totalMoney < 0){
             moneyHtml.innerHTML = "-" + correctNumber(totalMoney);
         }else{
@@ -98,9 +179,11 @@ function createTransaction(id, remove = 0, updateTotal = 0){
 
         if (updateTotal == 1){
             updateTotalHtml();
+            updateDeposityHtml();
+            updateWithdrawHtml();
         }else{
-            console.log('generate');
             generateFinances(storaged[1]);
+            deposityOrWithdraw(storaged[1]);
         }
 
         ul.innerHTML += `
@@ -126,6 +209,7 @@ function removeTransaction(event){
     let storaged = localStorage.getItem(id);
     storaged = JSON.parse(storaged)
     removeFinances(storaged[1]);
+    removeDeposityOrWithdraw(storaged[1]);
 
     localStorage.removeItem(id);
 }
